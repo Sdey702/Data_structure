@@ -1,0 +1,976 @@
+Built a graph : 
+-----------------------
+
+   #include<bits/stdc++.h> 
+	using namespace std; 
+	  
+	// A utility function to add an edge in an 
+	// undirected graph. 
+	void addEdge(vector<int> adj[], int u, int v) 
+	{ 
+	    adj[u].push_back(v);  // undirected
+	                          // use one for directed
+	    adj[v].push_back(u); 
+	} 
+        // print the graph.
+	void printGraph(vector<int> adj[], int V) 
+	{ 
+	    for (int v = 0; v < V; ++v) 
+	    { 
+	        cout << "\n Adjacency list of vertex "
+		    << v << "\n head "; 
+	        for (auto x : adj[v]) 
+		  cout << "-> " << x; 
+	        printf("\n"); 
+	    } 
+	} 
+
+
+	int main() 
+	{ 
+	    int V = 5; 
+	  
+	    // The below line may not work on all 
+	    // compilers.  If it does not work on 
+	    // your compiler, please replace it with 
+	    // following 
+	    // vector<int> *adj = new vector<int>[V]; 
+	    vector<int> adj[V]; 
+	  
+	    // Vertex numbers should be from 0 to 4. 
+	    addEdge(adj, 0, 1); 
+	    addEdge(adj, 0, 4); 
+	    addEdge(adj, 1, 2); 
+	    addEdge(adj, 1, 3); 
+	    addEdge(adj, 1, 4); 
+	    addEdge(adj, 2, 3); 
+	    addEdge(adj, 3, 4); 
+	    
+	    printGraph(adj,V);
+	    
+	    cout<<"done";
+	    return 0;
+	}
+
+
+   # Using class:
+   ----------------
+   
+    #include<bits/stdc++.h>
+    using namespace std;
+    
+    class grah{
+    
+       int v;
+       vector<int> *adj;
+    
+     public:
+        graph(int v);
+        void addedge(int u,int v);
+    
+    }
+    
+    graph::graph(int v){
+    
+         this V->v;
+         adj = new vector<int> [V];
+    }
+    
+    void graph::addage(int u,int v){
+    
+       adj[u].push_back(v);
+    }
+    
+    
+   int main() 
+   { 
+    // Create a graph given in the above diagram 
+    Graph g(4); 
+    g.addEdge(0, 1); 
+    g.addEdge(0, 2); 
+    g.addEdge(1, 2); 
+    g.addEdge(2, 0); 
+    g.addEdge(2, 3); 
+    g.addEdge(3, 3); 
+  
+   } 
+	
+	
+Travarsal :
+--------------
+
+   Dfs :
+   ------
+  
+  	         #include<bits/stdc++.h> 
+		using namespace std; 
+		  
+		// A utility function to add an edge in an 
+		// undirected graph. 
+
+
+		vector<bool> visited(4,false);
+
+		void addEdge(vector<int> adj[], int u, int v) 
+		{ 
+		    adj[u].push_back(v); 
+		 //   adj[v].push_back(u); 
+		} 
+
+		void printGraph(vector<int> adj[], int V) 
+		{ 
+		    for (int v = 0; v < V; ++v) 
+		    { 
+		        cout << "\n Adjacency list of vertex "
+			    << v << "\n head "; 
+		        for (auto x : adj[v]) 
+			  cout << "-> " << x; 
+		        printf("\n"); 
+		    } 
+		} 
+
+		  
+		void dfs_help( vector<int> adj[], int v){
+		    
+		    visited[v]=true;
+		    
+		    cout << v ;
+		    
+		    for(auto it=adj[v].begin(); it!=adj[v].end(); ++it){
+		        
+		        if(!visited[*it]){
+			   
+			   dfs_help(adj,*it);
+			   
+			   }
+		        }
+		    
+		    
+		    }
+		 
+		  
+		void dfs(vector<int> adj[],int v,int V){
+		    
+		  //  for(int i=0;i < V;++i){
+		    
+		      dfs_help(adj,v);
+		       
+		 //   }
+
+		}
+
+
+		int main() 
+		{ 
+		    int V =4 ; 
+		  
+		    // The below line may not work on all 
+		    // compilers.  If it does not work on 
+		    // your compiler, please replace it with 
+		    // following 
+		    // vector<int> *adj = new vector<int>[V]; 
+		    vector<int> adj[V]; 
+		  
+		    // Vertex numbers should be from 0 to 4. 
+
+		     addEdge(adj,0, 1);
+		     addEdge(adj,0, 2);
+		     addEdge(adj,1, 2);
+		     addEdge(adj,2, 0);
+		     addEdge(adj,2, 3);
+		     addEdge(adj,3, 3);
+		     
+		     dfs(adj,2,4);
+		    
+		    //printGraph(adj,V);
+		    
+		    cout<<"\n"<<"done";
+		    return 0;
+		}
+		
+		
+		
+		
+		
+      Bfs :
+      ------
+      
+                  #include <iostream>
+		#include <vector>
+
+		using namespace std;
+
+		void addedge(vector<int> arr[] ,int u,int v){
+		    
+		    
+		    arr[u].push_back(v);
+		   
+		}
+
+		void bfs(vector<int> arr[], bool visit[], bool travars[],int V){
+		    
+		    if (visit[V] != true)
+		    {
+		        cout << V ;
+		        visit[V] = true;
+		    }
+		    
+
+		    for (auto i : arr[V])
+		    {
+		        if (visit[i] != true)
+			   {
+			       visit[i] = true;
+			       cout << i ;
+			      
+
+			   }
+		    }
+
+
+		    for (auto i : arr[V])
+		    {
+		      if (travars[i] != true)     //over come self loop we use store travarsal if we don,t then infinite loop occure 
+		        {  
+			   travars[i]=true;
+			   bfs(arr,visit,travars,i);
+		        }
+		    }
+
+
+
+
+		}
+
+
+
+		int main()
+		{
+		    cout << "Enter vartices\n";
+		    int v;
+		    cin >> v;
+		    vector<int> arr[v];
+		    bool visit[v] = {false};
+		    bool travars[v] = {false};
+		   
+		      addedge(arr,0, 1); 
+		      addedge(arr,0, 2); 
+		      addedge(arr,1, 2); 
+		      addedge(arr,2, 0); 
+		      addedge(arr,2, 3); 
+		      addedge(arr,3, 3);
+		    
+		    bfs(arr,visit,travars,2);
+		    cout <<"\n";
+		    
+		}
+
+      
+		
+cyclic or acyclic :
+-----------------------
+using dfs tecnique (directed graph):
+---------------------------------------
+
+
+		#include<iostream>
+		#include<vector>
+
+
+		using namespace std;
+ 
+                  //built graph
+		void addadge(vector<int> adj[],int v,int e)
+		{
+		   adj[v].push_back(e);
+		}
+
+                  bool help(vector<int> adj[],bool vi[],bool stack[],int v){
+                  
+                       vi[v]=true;
+                       stack[v]=true;
+                     
+                       for(auto x: adj[v]){
+                          
+                          if(vi[x]!=true && help(adj,vi,stack,x))
+                              return true;
+                          else if(stack[x])
+                              return true;
+                       }
+                       
+                       stack[v]=false;
+                       return false;
+                  
+                  }
+		
+		
+		
+		void cyclic(vector<int> adj[],int V){ 
+		  
+			bool vi[V];      
+		         bool stack[V];
+		         
+		         for(int i=0;i<V;i++){
+		            vi[i]=false;
+		            stack[i]=false;
+		         }
+		         
+		         //for When two starting vertex present
+		         
+		         for(int i=0; i<V; i++){
+		         
+		            if(help(adj,vi,stack,i))
+		                 cout<<"yes\n";//return true;
+		         }
+		         
+		         //return false
+		         cout<<"not\n";
+		}
+
+
+
+		int main(){
+		int v;
+		cin >> v;
+
+		bool vis[v]={false};
+		vector<int> adj[v];
+		addadge(adj,0,1);
+		addadge(adj,0,2);
+		addadge(adj,2,3);
+		addadge(adj,1,3);/*Pick the vertex with minimum distance value and not already included in SPT (not in sptSET). The vertex 1 is picked and added to sptSet. So sptSet now becomes {0, 1}. Update the distance values of adjacent vertices of 1. The distance value of vertex 2 becomes 12.*/
+
+
+		//addadge(adj,3,1);
+
+
+		cyclic(adj,v);
+
+
+		}
+
+using dfs tecnique (undirected graph):
+-------------------------------------
+
+                  #include<iostream>
+		#include<vector>
+
+
+		using namespace std;
+ 
+                  //built graph
+		void addadge(vector<int> adj[],int v,int e)
+		{
+		   adj[v].push_back(e);
+		   adj[e].push_back(v);
+		}
+
+                  bool help(vector<int> adj[],bool vi[],bool stack[],int vertex,int parent){
+                  
+                       vi[vertex]=true;
+                       stack[vertex]=true;         
+                       cout<<parent<<"--->"<<vertex<<endl;
+                     
+                       for(auto x: adj[vertex]){         
+             
+                           if(vi[x]==true && parent!=x && parent!=-1)
+                                 return true;
+                           if(vi[x]!=true){
+                             if(help(adj,vi,stack,x,vertex))
+                                 return true;
+                           }
+                           
+                         
+                       }
+                       
+                       stack[vertex]=false;
+                       return false;
+                  
+                  }
+		
+		
+		
+		void cyclic(vector<int> adj[],int V){ 
+		  
+			bool vi[V];      
+		         bool stack[V];
+		         
+		         for(int i=0;i<V;i++){
+		            vi[i]=false;
+		            stack[i]=false;
+		         }
+		         
+		         //for When two starting vertex present
+		         
+		         for(int i=0; i<V; i++){
+		         
+		            if(help(adj,vi,stack,i,-1)){
+		                 cout<<"yes\n";//return true;
+		                 exit(0);}
+		         }
+		         
+		         //return false
+		         cout<<"not\n";
+		}
+
+
+
+		int main(){
+		int v;
+		cin >> v;
+
+		bool vis[v]={false};
+		vector<int> adj[v];
+		addadge(adj,0,1);
+		/*addadge(adj,0,2);
+		addadge(adj,2,3);
+		addadge(adj,1,3);// we use parent if parent && desti vertex not same then cycle present
+
+
+		addadge(adj,3,4);
+		
+		cyclic(adj,v);
+
+
+		}
+
+
+
+
+
+
+sortest path :
+------------------
+ Diskart's algo :
+ ---------------------
+		#include<iostream>
+		#include<vector>
+		using namespace std;
+
+		const int V=9;
+		vector<int> adj[V];
+
+		void addedge(int graph[][V]){
+
+
+		    for (size_t i = 0; i < V; i++)
+		    {
+		      for (size_t j = 0; j < V; j++)
+		      {
+			if (graph[i][j] != 0)
+			{
+			  adj[i].push_back(j);
+			}
+			
+		      }
+		      
+		    }
+
+		}
+
+
+		void help(int graph[][V],int cost[V],int s){
+
+		     for (auto x : adj[s])
+		     {
+			if (cost[x] > cost[s]+graph[s][x])
+			{
+			  cost[x] = cost[s]+graph[s][x];
+			  help(graph,cost,x);
+			}
+			
+		     }
+		     
+
+		}
+
+
+
+		void dijkstra(int graph[][V],int sours){
+
+		int cost[V];
+
+		for (size_t i = 0; i < V; i++)
+		{
+		  cost[i] = INT32_MAX;
+		}
+
+
+		cost[sours]=0;
+		help(graph,cost,sours);
+
+		for (size_t i = 0; i < V; i++)
+		{
+		  cout << i<<"tt"<< cost[i] << "\n";
+		}
+
+
+		}
+
+
+
+		int main()
+		{ 
+		  
+			/* Let us create the example graph discussed above */
+			int graph[V][V] = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, 
+								{ 4, 0, 8, 0, 0, 0, 0, 11, 0 }, 
+								{ 0, 8, 0, 7, 0, 4, 0, 0, 2 }, 
+								{ 0, 0, 7, 0, 9, 14, 0, 0, 0 }, 
+								{ 0, 0, 0, 9, 0, 10, 0, 0, 0 }, 
+								{ 0, 0, 4, 14, 10, 0, 2, 0, 0 }, 
+								{ 0, 0, 0, 0, 0, 2, 0, 1, 6 }, 
+								{ 8, 11, 0, 0, 0, 0, 1, 0, 7 }, 
+								{ 0, 0, 2, 0, 0, 0, 6, 7, 0 } }; 
+
+		  addedge(graph);
+
+			dijkstra(graph, 0); 
+
+			return 0; 
+		} 
+
+
+  
+Topological sort :
+--------------------
+
+
+
+		#include<iostream>
+		#include<vector>
+
+		using namespace std;
+
+		class graph{
+
+		    int v;
+		    vector<int> *adj;
+		    vector<int> Stack;
+		    
+		    public:
+		      
+		       graph(int V);
+
+		       void addEge(int v,int u);
+		 
+		       void sort(int v, bool vis[]);
+
+		       void topologicalsort(int v);
+
+		};
+
+		graph :: graph(int V){
+
+		    this -> v = V;
+		    adj = new vector<int> [v];
+		    
+		    
+		}
+
+		void graph :: addEge (int v,int u){
+
+		   adj[v].push_back(u);
+		    
+		}
+
+
+		void graph :: sort(int v , bool vis[]){
+
+
+			
+			for(auto x: adj[v]){
+
+			    sort(x,vis);
+
+
+			     
+
+			}
+			   if(vis[v] != true){
+			       
+			       vis[v] = true;
+			       // cout << v;
+			       Stack.push_back(v);
+
+			   }         
+
+		}
+
+
+		void graph :: topologicalsort(int v){
+
+		       bool vis[6] = {false};
+
+		       for(int i=0; i<v; i++){
+
+			  sort(i,vis);
+
+		       }
+
+Pick the vertex with minimum distance value and not already included in SPT (not in sptSET). The vertex 1 is picked and added to sptSet. So sptSet now becomes {0, 1}. Update the distance values of adjacent vertices of 1. The distance value of vertex 2 becomes 12.
+
+
+		       for(auto ptr = Stack.rbegin(); ptr != Stack.rend(); ++ptr){
+
+			     cout << *ptr ;
+		        }
+
+
+		}
+
+
+
+		int main(){
+
+		  graph g(6);
+		 
+
+		 g.addEge(5, 2);
+		 g.addEge(5, 0); 
+		 g.addEge(4, 0); 
+		 g.addEge(4, 1); 
+		 g.addEge(2, 3); 
+		 g.addEge(3, 1); 
+
+		g.topologicalsort(6);
+
+
+		}
+
+Disjoin set :
+--------------
+
+		#include <iostream>
+
+		using namespace std;
+
+
+		struct graph
+		{
+	   	    int sourse;
+		    int desti;
+		};
+
+
+		int set(int v,int *parent){
+
+		   if (parent[v] == v)
+		   {
+		       return v;
+		   }
+		   // parent[0|1|2|3
+                     // parent[0|1|2|3|4|5]   if index and value will be same   then return else check anather vertices
+		  
+		    return set(parent[v],parent);
+
+		}
+
+		// we send the arr and check cyclic or not
+		
+		void  disjoin(int vertex, graph *arr){
+		    
+		    graph *output = new graph [vertex -1];
+		    int *parent = new int [vertex];
+		    for (size_t i = 0; i < vertex; i++)
+		    {
+		        parent[i] = i;
+		    }
+		    
+		     
+		     int i = 0;
+		     int count = 0; 
+		   
+		    // in MST n-1 edges are present 
+		     while (count < vertex-1 )
+		     {
+			 graph curentedge = arr[i];
+			 int sourse = set(curentedge.sourse,parent);
+			 int desti = set(curentedge.desti,parent);
+
+			 // sourse == desti cyclic 
+			 if (sourse != desti)
+			 {
+			     parent[desti] = sourse ;
+
+			     output[count].sourse = curentedge.sourse;
+			     output[count].desti = curentedge.desti; 
+			     
+			     count ++;
+
+			 }
+			 
+			 i++;
+		     }
+
+
+
+		    for (int i = 0; i < vertex-1; i++)
+		    {
+		        cout << output[i].sourse << " " <<  output[i].desti <<"\n"; 
+		    }
+		     
+		}
+
+
+
+
+
+
+
+
+
+		// main
+
+		int main(){
+
+		    int v,egde;
+		    cin >> v >> egde ;
+		    graph *arr = new graph[v];
+
+		    cout << "Enter Sourse  destination\n";
+
+		    for (int i = 0; i < egde; i++)
+		    {
+		        cin >> arr[i].sourse >>  arr[i].desti; 
+		    }
+		    
+		    disjoin(v,arr);
+
+
+
+		}
+
+
+
+
+
+MST(Kruskal ,Prins):
+-----------------------
+
+ Kruskal:
+ ---------
+
+
+
+Backtracking question :
+------------------------
+ALGO :
+-------
+
+     n queen :
+     -------------
+        
+         #include<iostream>
+	#define n 4
+	using namespace std;
+	bool b[n][n] = {false};
+
+
+
+
+	void print(bool b[][n]){
+	    
+	   for (size_t i = 0; i < n; i++)
+	   {
+	       for (size_t j = 0; j < n; j++)
+	       {
+		  cout<<b[i][j]<<"  ";
+	       }
+	       
+	       cout << "\n\n";
+
+	   }
+	   
+	}
+
+
+	bool safe(bool b[n][n],int row,int col){
+	    int i,j;
+	    
+	    for (size_t i = 0; i < n; i++)
+	    {
+	        if (b[i][col])
+	        {
+		   return false;
+	        }
+	        
+	    }
+	    
+
+	    for(i=row, j=col; i>=0 && j>=0; i--,j--){
+
+	        if (b[i][j])
+	        {
+		   return false;
+	        }
+	        
+	    }
+
+
+	    for(i=row, j=col; i>=n && j>=n; i++,j++){
+
+	        if (b[i][j])
+	        {
+		   return false;
+	        }
+	        
+	    }
+
+	   
+	   return true;
+
+	}
+
+
+
+	bool solv(bool b[][n],int row){
+
+	   if (row >= n)
+	   {
+	       return true;
+	   }
+	   
+	   for (size_t i = 0; i < n; i++)
+	   {
+	       if (safe(b,row,i))
+	       {
+		  b[row][i] = 1;
+		  if (solv(b,row+1))
+		  {
+		      return true;
+		  }
+		  
+
+		  b[row][i] = 0;
+	       }
+	        
+	   }
+	   
+	   return false;
+
+	}
+
+
+
+	int main(){
+
+	    solv(b,0);
+	    print(b);
+	    
+	    return 0;
+	}
+ 
+ 
+ 1.Bellman ford :
+ ------------------
+ 
+		#include<iostream>
+		#include<vector>
+		# define count 8
+		# define vir 5
+
+		struct a
+		{
+		  int sourse;
+		  int desti;
+		  int weight;
+		};
+
+		void balman(a *adj,int s){
+
+		   int min[vir];
+		   for (size_t i = 0; i < vir; i++)
+		   {
+		     min[i] = INT32_MAX;
+		   }
+		   
+		  min[s] = 0;
+
+		  for (size_t i = 0; i < vir; i++)
+		  {
+		      for (size_t i = 0; i < count; i++)
+		     {
+		      if (min[adj[i].desti] > min[adj[i].sourse] + adj[i].weight)
+		      {
+		        min[adj[i].desti] = min[adj[i].sourse] + adj[i].weight;
+		      }
+		     
+		     }
+		  }
+		  
+
+
+		  for (size_t i = 0; i < vir; i++)
+		  {
+		     std :: cout << i << "tt" << min[i] << "\n";
+		  }
+		  
+		  
+
+
+		}
+
+		int main(){
+
+		   a *adj = new a [count];
+
+		   for (size_t i = 0; i < count; i++)
+		   {
+		       std :: cin >> adj[i].sourse >> adj[i].desti >> adj[i].weight;
+
+		   }
+		   
+		  balman(adj,0);
+
+		}
+ 
+ 
+ 2.floyd warshall(All pair sortest path):
+ ------------------------------------------
+
+         #include<iostream>
+	#include<iomanip>
+	#define NODE 7
+	#define INF 999
+	using namespace std;
+	//Cost matrix of the graph
+	int cost[NODE][NODE] = {
+	   {0, 3, 6, INF, INF, INF, INF},
+	   {3, 0, 2, 1, INF, INF, INF},
+	   {6, 2, 0, 1, 4, 2, INF},
+	   {INF, 1, 1, 0, 2, INF, 4},
+	   {INF, INF, 4, 2, 0, 2, 1},
+	   {INF, INF, 2, INF, 2, 0, 1},
+	   {INF, INF, INF, 4, 1, 1, 0}
+	};
+	void floydWarshal(){
+	  //copy costMatrix to new matrix
+		for(int k = 0; k<NODE; k++){
+		   for(int i = 0; i<NODE; i++)
+		      for(int j = 0; j<NODE; j++)
+		         if(cost[i][k]+cost[k][j] < cost[i][j])
+		            cost[i][j] = cost[i][k]+cost[k][j];
+	   }
+
+
+	   
+	   cout << "The matrix:" << endl;
+	   for(int i = 0; i<NODE; i++){
+	      for(int j = 0; j<NODE; j++)
+		cout << setw(3) << cost[i][j];
+	      cout << endl;
+	   }
+	}
+	int main(){
+	   floydWarshal();
+	}
+
+
+
+
+ 3.tsp
+ 4.flood full
+ 5.graph coloring
+ 6.Snake & algo
+
